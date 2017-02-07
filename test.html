@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	<script type="text/javascript" src="require.js"></script>
+	<script>
+
+		require.config({
+			paths: {
+	            a1: 'js/a1',
+	            a2: 'js/a2',
+	            a3: 'js/a3',
+	            a4: 'js/a4',
+	            home: 'js/home'
+	        },
+	        shim: {
+	            'home': {
+	                deps: ['a1']
+	            },
+	            'a1': {
+	                 deps: ['a2','a3']
+	            }
+	        }
+		});
+
+		require(['home'], function (home) {
+
+			console.log('加载完成',home);
+
+			var p = document.createElement('p');
+			p.innerHTML = '加载完毕';
+			document.body.appendChild(p);
+
+			var a = document.createElement('a');
+			a.href = 'javascript:;';
+			a.onclick = home;
+			a.innerHTML = ' 我是home.js导出的方法 ';
+			a.style.margin = '0 5px';
+
+			p.appendChild(a);
+
+
+			require(['js/b3'], function (b3) {
+				var p = document.createElement('p');
+				p.innerHTML = '加载完毕';
+				document.body.appendChild(p);
+
+				var b = document.createElement('a');
+				b.href = 'javascript:;';
+				b.onclick = b3;
+				b.innerHTML = ' 我是b3.js导出的方法 ';
+				b.style.margin = a.style.margin;
+
+				p.appendChild(a);
+				p.appendChild(b);
+			});
+		});
+
+
+
+		require(['js/home2'], function (home) {
+
+			console.log('加载完成',home);
+
+			var p = document.createElement('p');
+			p.innerHTML = '加载完毕';
+			document.body.appendChild(p);
+
+			var a = document.createElement('a');
+			a.href = 'javascript:;';
+			a.onclick = home;
+			a.innerHTML = ' 我是home2.js导出的方法 ';
+			a.style.margin = '0 5px';
+
+			p.appendChild(a);
+		});
+
+	</script>
+</body>
+</html>
